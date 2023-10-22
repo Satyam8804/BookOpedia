@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/coverImg"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:background="@drawable/round_corner"
+            android:src="@mipmap/book1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/bookTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Introduction to Python: Build a Master Comprehensive Programming"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/authorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subrat Gupta"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/custom_black"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:background="@drawable/border_right"
+            android:text="4.5" />
+
+        <TextView
+            android:id="@+id/ebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:background="@drawable/border_right"
+            android:text="Ebook" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+
+            android:textSize="24sp"
+            android:text="Comics" />
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/readBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/custom_black"
+        android:text="Read For Free" />
+
+
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="About this book" />
+
+    <TextView
+        android:id="@+id/bookDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/book_description" />
+</LinearLayout>

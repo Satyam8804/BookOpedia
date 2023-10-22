@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Ebook Store</string>
+    <string name="app_name">BookOpedia</string>
+    <string name="book_description">
+        Build your first website from scratch and actually have fun doing it.
+        This book walks you through the process, teaching you everything you need to know along the way.
+        Plus we throw in lots of silly jokes and zombie references to keep you entertained and engaged.
+        Learning doesn’t have to bore you to death (because then you might come back as a zombie and
+        it’d just be messy).</string>
 </resources>
