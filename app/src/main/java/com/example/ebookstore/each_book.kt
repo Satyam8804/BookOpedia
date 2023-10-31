@@ -8,6 +8,9 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 class each_book : AppCompatActivity() {
     lateinit var coverImg:ImageView
@@ -31,8 +34,14 @@ class each_book : AppCompatActivity() {
         rating = findViewById(R.id.rating)
         genre = findViewById(R.id.genre)
         bookDesc = findViewById(R.id.bookDesc)
+           val coverurl = intent.getStringExtra("bookCover")
+        Glide.with(this).load(coverurl).
+        apply(
+            RequestOptions()
+            .placeholder(R.mipmap.book1) // You can set a placeholder image
+            .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
+        ).into(coverImg)
 
-        coverImg.setImageResource(intent.getIntExtra("bookCover",R.mipmap.book1))
         bookTitle.text = "Introduction to Python: Build a Master Comprehensive Programming"
         authorName.text = intent.getStringExtra("bookAuthor")
         bookDesc.text = intent.getStringExtra("bookDesc")

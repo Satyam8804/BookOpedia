@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+
 
 class bookAdapter(var list: List<bookModel>):RecyclerView.Adapter<bookAdapter.myDataHolder>() {
     class myDataHolder(itemView: View,list:List<bookModel>) : RecyclerView.ViewHolder(itemView)
@@ -26,7 +30,7 @@ class bookAdapter(var list: List<bookModel>):RecyclerView.Adapter<bookAdapter.my
                     intent.putExtra("bookTitle", clickedBook.title)
                     intent.putExtra("bookAuthor", clickedBook.authorName)
                     intent.putExtra("bookCover", clickedBook.coverImg)
-                    intent.putExtra("bookDesc", clickedBook.desc)
+                    intent.putExtra("bookDesc", clickedBook.des)
                     intent.putExtra("rating", clickedBook.rating)
                     intent.putExtra("genre", clickedBook.genre)
                     intent.putExtra("year", clickedBook.publishedYear)
@@ -50,7 +54,11 @@ class bookAdapter(var list: List<bookModel>):RecyclerView.Adapter<bookAdapter.my
     override fun onBindViewHolder(holder: myDataHolder, position: Int) {
         val data = list[position]
         holder.title.text = data.title
-        holder.coverPic.setImageResource(data.coverImg)
+        Glide.with(holder.itemView.context).load(data.coverImg).apply(
+            RequestOptions()
+            .placeholder(R.mipmap.book1) // You can set a placeholder image
+            .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
+        ).into(holder.coverPic)
         holder.rating.text = data.rating
 
     }
