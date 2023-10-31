@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "947823999549",
+    "project_id": "bookopedia-f864e",
+    "storage_bucket": "bookopedia-f864e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947823999549:android:e87b6faec15440290c0854",
+        "android_client_info": {
+          "package_name": "com.example.ebooksstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV509l5kkKEubyRyzA-lufued02flnjWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947823999549:android:df3f1c9e23f5f0ab0c0854",
+        "android_client_info": {
+          "package_name": "com.example.ebookstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV509l5kkKEubyRyzA-lufued02flnjWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

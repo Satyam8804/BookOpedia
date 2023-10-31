@@ -8,12 +8,18 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import com.google.gson.reflect.TypeToken
+import java.io.InputStream
+import java.nio.charset.Charset
+import javax.microedition.khronos.opengles.GL10
 
 class MainActivity : AppCompatActivity() {
     private lateinit var parentAdapter: ParentAdapter
 
     private val mainList = ArrayList<ParentModel>()
-    private val bookList = ArrayList<bookModel>()
+
     private lateinit var rv : RecyclerView
 
     @SuppressLint("NotifyDataSetChanged")
@@ -23,9 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.black)))
         window?.statusBarColor = ContextCompat.getColor(this, R.color.black)
-
-
-
         title ="Book Store"
 
         rv = findViewById(R.id.rv)
@@ -37,62 +40,39 @@ class MainActivity : AppCompatActivity() {
         rv.itemAnimator = DefaultItemAnimator()
         rv.adapter = parentAdapter
 
+        val inputStream:InputStream=assets.open("links.json")
+        val size = inputStream.available()
+        val buffer=ByteArray(size)
+        inputStream.read(buffer)
+        inputStream.close()
+        val json = String(buffer, Charsets.UTF_8)
+        val gson = Gson()
+        val listType = object: TypeToken<List<bookModel>>() {}.type
+        val parser = JsonParser()
+        val jsonObject=parser.parse(json).asJsonObject
+//        val genresArray=jsonObject.getAsJsonArray()
+        for ((genreName, booksArray) in jsonObject.entrySet()) {
+             val bookList = mutableListOf<bookModel>()
+            for (bookElement in booksArray.asJsonArray) {
+                val book = gson.fromJson(bookElement, bookModel::class.java)
+                bookList.add(book)
+            }
 
-        var data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 2",R.mipmap.book1,"Book 1" ,"4.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 3",R.mipmap.book1,"Book 1" ,"5.0" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 4",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 5",R.mipmap.book1,"Book 1" ,"2.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 6",R.mipmap.book1,"Book 1" ,"4.3" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.9" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"4.9" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
-        data = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data)
+            mainList.add(ParentModel(genreName, bookList))
+            bookList.clear()
+
+
+        }
+
+
+
+
+
+
+
 
 //        bookList.clear()
 
-        mainList.add(ParentModel("Comics" , R.mipmap.book1 , bookList))
-
-        var data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-        data1 = bookModel("Semester 1",R.mipmap.book1,"Book 1" ,"3.5" , "Comics","Satyam" ,"2019")
-        bookList.add(data1)
-
-        mainList.add(ParentModel("Programming" , R.mipmap.book1 , bookList))
 
         parentAdapter.notifyDataSetChanged()
     }

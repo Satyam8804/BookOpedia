@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+
 class ParentAdapter(private val parentList: List<ParentModel>):RecyclerView.Adapter<ParentAdapter.ParentViewHolder>() {
     private lateinit var childAdapter: bookAdapter
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

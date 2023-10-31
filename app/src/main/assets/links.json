@@ -1,0 +1,89 @@
+{
+  "Programming": [
+    {
+      "title": "Semester 1",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 1",
+      "rating": "3.5",
+      "authorName": "Satyam",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 1",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 1",
+      "rating": "3.5",
+      "authorName": "Satyam",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 1",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 1",
+      "rating": "3.5",
+      "authorName": "Satyam",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 1",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 1",
+      "rating": "3.5",
+      "authorName": "Satyam",
+      "publishedYear": "2019",
+      "link": "2019"
+    }
+
+  ],
+  "Comics": [
+    {
+      "title": "Semester 2",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 2",
+      "rating": "4.5",
+      "authorName": "Aniruddh",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 2",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 2",
+      "rating": "4.5",
+      "authorName": "Aniruddh",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 2",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 2",
+      "rating": "4.5",
+      "authorName": "Aniruddh",
+      "publishedYear": "2019",
+      "link": "2019"
+    },
+    {
+      "title": "Semester 2",
+      "genre": "Programming",
+      "coverImg": "https://drive.google.com/file/d/1xRMVwEqzekJUl5fExW1AnPz1wmdrWXmz/view?usp=drive_link",
+      "des": "Book 2",
+      "rating": "4.5",
+      "authorName": "Aniruddh",
+      "publishedYear": "2019",
+      "link": "2019"
+    }
+  ]
+
+
+}

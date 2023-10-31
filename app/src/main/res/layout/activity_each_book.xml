@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Subrat Gupta"
             android:layout_marginTop="10dp"
-            android:textColor="@color/custom_black"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="18sp" />
         </LinearLayout>
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/custom_black"
+        android:backgroundTint="@color/black"
         android:text="Read For Free" />
 
 

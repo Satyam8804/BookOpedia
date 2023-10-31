@@ -9,6 +9,7 @@ import android.widget.GridView
 import androidx.core.content.ContextCompat
 
 
+
 class GridViewActivity : AppCompatActivity() {
     lateinit var gridView : GridView
     lateinit var list: ArrayList<bookModel>
@@ -24,7 +25,7 @@ class GridViewActivity : AppCompatActivity() {
         gridView = findViewById(R.id.gv)
 
 
-        list = ArrayList()
+        list = ArrayList<bookModel>()
 
         val gridData = intent.getParcelableArrayListExtra<bookModel>("gridData")
         if (gridData != null) {
