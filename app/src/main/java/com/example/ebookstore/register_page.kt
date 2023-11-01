@@ -44,8 +44,8 @@ class register_page : AppCompatActivity() {
 
         setContentView(R.layout.activity_register_page)
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
-        window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
+//        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        window?.statusBarColor = ContextCompat.getColor(this, R.color.status)
 
         registerButton = findViewById(R.id.registerButton)
         firebaseAuth = FirebaseAuth.getInstance()

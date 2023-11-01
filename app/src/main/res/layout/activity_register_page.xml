@@ -1,13 +1,4 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".register_page">-->
 
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-<!--    <?xml version="1.0" encoding="utf-8"?>-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
@@ -15,6 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 android:gravity="center"
+    android:background="@drawable/background"
 tools:context=".register_page">
 
 <androidx.cardview.widget.CardView
@@ -103,11 +95,6 @@ tools:context=".register_page">
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background" />
-
-
-
-
-
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
@@ -129,6 +116,6 @@ tools:context=".register_page">
     android:padding="8dp"
     android:text="Already registered? Login "
     android:textAlignment="center"
-    android:textColor="@color/purple"
+    android:textColor="@color/white"
     android:textSize="14sp" />
 </LinearLayout>

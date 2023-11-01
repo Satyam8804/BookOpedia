@@ -32,6 +32,7 @@
             android:exported="false"/>
         <activity
             android:name=".LoginPage"
+            android:theme="@style/Theme.login"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,6 +41,7 @@
         </activity>
         <activity
             android:name=".register_page"
+            android:theme="@style/Theme.login"
             android:exported="false" />
         <activity
             android:name=".each_book"

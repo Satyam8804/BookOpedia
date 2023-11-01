@@ -33,9 +33,9 @@ class LoginPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_login_page)
-
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
-        window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
+//
+//        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        window?.statusBarColor = ContextCompat.getColor(this, R.color.status)
 
 
        email = findViewById(R.id.emailId)

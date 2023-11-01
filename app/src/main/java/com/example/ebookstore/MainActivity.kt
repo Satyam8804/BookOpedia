@@ -1,16 +1,20 @@
 package com.example.ebookstore
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.multidex.MultiDex
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -31,6 +35,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var rv : RecyclerView
 
     lateinit var userName : TextView
+    lateinit var add : FloatingActionButton
+    lateinit var upload: FloatingActionButton
+    lateinit var logOut: FloatingActionButton
+    var fabvisibility = false
 
     @SuppressLint("NotifyDataSetChanged", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +61,43 @@ class MainActivity : AppCompatActivity() {
         rv.layoutManager = layoutManager
         rv.itemAnimator = DefaultItemAnimator()
         rv.adapter = parentAdapter
+
+
+        add = findViewById(R.id.idFABAdd)
+        upload = findViewById(R.id.idFABUpload)
+        logOut = findViewById(R.id.idFABLogOut)
+
+
+        add.setOnClickListener{
+            if(!fabvisibility){
+                upload.show()
+                logOut.show()
+                upload.visibility = View.VISIBLE
+                logOut.visibility = View.VISIBLE
+                add.setImageDrawable(resources.getDrawable(R.drawable.baseline_close_24))
+                fabvisibility = true
+
+            }else{
+                upload.hide()
+                logOut.hide()
+                upload.visibility = View.GONE
+                logOut.visibility = View.GONE
+                add.setImageDrawable(resources.getDrawable(R.drawable.baseline_add_24))
+                fabvisibility = false
+            }
+        }
+
+        upload.setOnClickListener{
+
+            val intent = Intent(this,book_add::class.java)
+            startActivity(intent)
+        }
+        logOut.setOnClickListener{
+            val intent = Intent(this,LoginPage::class.java)
+            startActivity(intent)
+
+        }
+
 
         // Attach a ValueEventListener to fetch data
         databaseReference.addValueEventListener(object : ValueEventListener {
