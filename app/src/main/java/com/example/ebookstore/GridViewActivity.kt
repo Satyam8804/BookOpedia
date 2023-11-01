@@ -18,8 +18,8 @@ class GridViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grid_view)
 
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.black)))
-        window?.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         gridView = findViewById(R.id.gv)

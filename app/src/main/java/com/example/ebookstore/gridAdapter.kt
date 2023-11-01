@@ -37,6 +37,7 @@ class gridAdapter(var c: Context, var list: ArrayList<bookModel>): ArrayAdapter<
         Glide.with(c)
             .load(item.coverImg).  apply(
                 RequestOptions()
+                    .error(R.drawable.baseline_star_24)
                     .placeholder(R.mipmap.book1) // You can set a placeholder image
                     .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
                     )
@@ -55,6 +56,7 @@ class gridAdapter(var c: Context, var list: ArrayList<bookModel>): ArrayAdapter<
                     intent.putExtra("rating", clickedBook.rating)
                     intent.putExtra("genre", clickedBook.genre)
                     intent.putExtra("year", clickedBook.publishedYear)
+                    intent.putExtra("bookLink" , clickedBook.link)
                     context.startActivity(intent)
                 }
             }

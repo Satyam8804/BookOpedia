@@ -34,6 +34,7 @@ class bookAdapter(var list: List<bookModel>):RecyclerView.Adapter<bookAdapter.my
                     intent.putExtra("rating", clickedBook.rating)
                     intent.putExtra("genre", clickedBook.genre)
                     intent.putExtra("year", clickedBook.publishedYear)
+                    intent.putExtra("bookLink",clickedBook.link)
                     context.startActivity(intent)
                 }
             }
@@ -56,9 +57,11 @@ class bookAdapter(var list: List<bookModel>):RecyclerView.Adapter<bookAdapter.my
         holder.title.text = data.title
         Glide.with(holder.itemView.context).load(data.coverImg).apply(
             RequestOptions()
+                .error(R.drawable.baseline_star_24)
             .placeholder(R.mipmap.book1) // You can set a placeholder image
             .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
         ).into(holder.coverPic)
+
         holder.rating.text = data.rating
 
     }

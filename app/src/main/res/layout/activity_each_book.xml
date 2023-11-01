@@ -18,7 +18,7 @@
             android:src="@mipmap/book1" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginStart="10sp"
             android:orientation="vertical">
 
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/purple_200"
         android:text="Read For Free" />
 
 

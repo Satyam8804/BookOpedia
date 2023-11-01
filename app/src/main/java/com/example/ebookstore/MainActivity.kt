@@ -4,10 +4,18 @@ import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.multidex.MultiDex
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
@@ -19,17 +27,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var parentAdapter: ParentAdapter
 
     private val mainList = ArrayList<ParentModel>()
-
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var rv : RecyclerView
 
-    @SuppressLint("NotifyDataSetChanged")
+    lateinit var userName : TextView
+
+    @SuppressLint("NotifyDataSetChanged", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.black)))
-        window?.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        MultiDex.install(this)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
         title ="Book Store"
+
+        databaseReference = FirebaseDatabase.getInstance().reference.child("books")
+        userName = findViewById(R.id.userName)
+        userName.text = intent.getStringExtra("userName")
 
         rv = findViewById(R.id.rv)
 
@@ -40,40 +54,34 @@ class MainActivity : AppCompatActivity() {
         rv.itemAnimator = DefaultItemAnimator()
         rv.adapter = parentAdapter
 
-        val inputStream:InputStream=assets.open("links.json")
-        val size = inputStream.available()
-        val buffer=ByteArray(size)
-        inputStream.read(buffer)
-        inputStream.close()
-        val json = String(buffer, Charsets.UTF_8)
-        val gson = Gson()
-        val listType = object: TypeToken<List<bookModel>>() {}.type
-        val parser = JsonParser()
-        val jsonObject=parser.parse(json).asJsonObject
-//        val genresArray=jsonObject.getAsJsonArray()
-        for ((genreName, booksArray) in jsonObject.entrySet()) {
-             val bookList = mutableListOf<bookModel>()
-            for (bookElement in booksArray.asJsonArray) {
-                val book = gson.fromJson(bookElement, bookModel::class.java)
-                bookList.add(book)
+        // Attach a ValueEventListener to fetch data
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mainList.clear() // Clear the list to avoid duplicates
+
+                for (genreSnapshot in snapshot.children) {
+                    val genreName = genreSnapshot.key
+                    val bookList = mutableListOf<bookModel>()
+
+                    for (bookSnapshot in genreSnapshot.children) {
+                        val book = bookSnapshot.getValue(bookModel::class.java)
+                        bookList.add(bookModel(book?.title,book!!.coverImg,book.des,book.rating,book.genre,book.authorName,book.publishedYear,book.link))
+                    }
+
+                    if (genreName != null) {
+                        mainList.add(ParentModel(genreName, bookList))
+                    }
+                }
+
+                parentAdapter.notifyDataSetChanged() // Notify the adapter of the data change
             }
 
-            mainList.add(ParentModel(genreName, bookList))
-            bookList.clear()
-
-
-        }
-
-
-
-
-
-
-
-
-//        bookList.clear()
-
-
-        parentAdapter.notifyDataSetChanged()
+            override fun onCancelled(error: DatabaseError) {
+                // Handle any errors here
+                Log.e("Firebase", "Data retrieval failed: $error")
+            }
+        })
     }
-}
+
+    }
+

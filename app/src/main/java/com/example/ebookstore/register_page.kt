@@ -1,6 +1,8 @@
 package com.example.ebookstore
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.example.ebookstore.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -35,10 +38,15 @@ class register_page : AppCompatActivity() {
     lateinit var databaseReference: DatabaseReference
     private lateinit var storage:FirebaseStorage
     private lateinit var storageReference: StorageReference
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_register_page)
+
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
+
         registerButton = findViewById(R.id.registerButton)
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance()

@@ -46,7 +46,6 @@ class ParentAdapter(private val parentList: List<ParentModel>):RecyclerView.Adap
         }
 
 
-
         holder.childRecyclerView.setHasFixedSize(true)
         holder.childRecyclerView.layoutManager = LinearLayoutManager(holder.childRecyclerView.context,LinearLayoutManager.HORIZONTAL,false)
         childAdapter = bookAdapter(parentItem.mList)
