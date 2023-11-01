@@ -2,9 +2,11 @@ package com.example.ebookstore
 
 import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.github.barteksc.pdfviewer.PDFView
 import java.io.BufferedInputStream
@@ -16,6 +18,7 @@ import java.io.IOException
 class PdfViewer : AppCompatActivity() {
     private lateinit var pdfView: PDFView
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_viewer)
