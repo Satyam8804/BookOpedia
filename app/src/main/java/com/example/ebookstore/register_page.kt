@@ -13,8 +13,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.example.ebookstore.R
+import com.example.ebookstore.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class register_page : AppCompatActivity() {
@@ -38,6 +42,7 @@ class register_page : AppCompatActivity() {
     lateinit var databaseReference: DatabaseReference
     private lateinit var storage:FirebaseStorage
     private lateinit var storageReference: StorageReference
+    lateinit var circleImage: CircleImageView
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +55,15 @@ class register_page : AppCompatActivity() {
         registerButton = findViewById(R.id.registerButton)
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance()
+        circleImage = findViewById(R.id.imageView3)
 
+        circleImage.setOnClickListener{
+            intent = Intent()
+            intent.setType("image/*")
+            intent.setAction(Intent.ACTION_GET_CONTENT)
+            startActivityForResult(Intent.createChooser(intent,"Choose the image"),1)
 
+        }
 
         loginText = findViewById(R.id.loginText)
 
@@ -78,8 +90,9 @@ class register_page : AppCompatActivity() {
             val em = email.text.toString()
             val pass = password.text.toString()
             var nam = name.text.toString()
+            var cpass = confirmPassword.text.toString()
 
-            if(em.isNotEmpty() && pass.isNotEmpty() && nam.isNotEmpty() ) {
+            if(em.isNotEmpty() && pass.isNotEmpty() && nam.isNotEmpty()  && cpass.isNotEmpty()) {
 
                 firebaseAuth.createUserWithEmailAndPassword(em, pass).addOnCompleteListener {
 
@@ -88,7 +101,7 @@ class register_page : AppCompatActivity() {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show()
 
-
+                          realtimeDatabase(nam,em,pass)
 
                         var i: Intent = Intent(this, LoginPage::class.java)
                         startActivity(i)
@@ -130,16 +143,19 @@ class register_page : AppCompatActivity() {
 
 
     }
-//    fun realtimeDatabase(nam:String,em:String,uname:String,cgpa:Float,program:String,cont:String) {
-//        val users = User(nam, em, uname, cgpa, program, cont)
-//        reference = FirebaseDatabase.getInstance().getReference("Users")
-//        reference.child(uname).setValue(users).addOnCompleteListener{
-//            if(it.isSuccessful) {
-//                Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
-//            }
-//
-//        }
-//    }
+    fun realtimeDatabase(nam:String,em:String,pass:String) {
+        val users = User(nam, em, pass)
+        reference = FirebaseDatabase.getInstance().getReference("Users")
+        var userkey = reference.child(nam).push().getKey()
+        if(userkey!=null) {
+            reference.child(nam).child(userkey).setValue(users).addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+    }
 //    fun setImage(uname: String){
 //        storageReference = FirebaseStorage.getInstance().getReference("Images")
 //        storageReference.child(System.currentTimeMillis().toString()).putFile(uri).addOnSuccessListener {
@@ -159,6 +175,11 @@ class register_page : AppCompatActivity() {
 //        }
 //    }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==1 && data!=null && resultCode== RESULT_OK && data.getData()!=null){
+            Glide.with(this).load(data.data).into(circleImage)
+        }
+    }
 
 }
