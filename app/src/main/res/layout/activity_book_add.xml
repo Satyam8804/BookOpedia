@@ -18,10 +18,12 @@
     <!-- Title -->
     <EditText
         android:id="@+id/Genre"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="Genre:"
+        android:textSize="18sp"
+        android:textColor="#000000"
 />
 
     <EditText
@@ -52,40 +54,26 @@
         android:id="@+id/publishYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:ems="10"
+        android:inputType="date"
         android:hint="Year" />
-
-    <ImageView
-        android:id="@+id/selectedImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:visibility="gone" />
 
     <Button
         android:id="@+id/UploadImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Image"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:padding="16dp" />
-
-<!--     PDF Upload -->
-    <TextView
-        android:id="@+id/selectedPdf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:text="Upload Image"
+        android:background="#CADC1A"
+
+        android:padding="16dp" />
+
+    <!-- PDF Upload -->
     <Button
         android:id="@+id/UploadPDF"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-
         android:text="Upload PDF"
-        android:layout_marginBottom="10dp"
+        android:background="#2196F3"
         android:padding="16dp" />
 
     <!-- Add Button -->
@@ -93,8 +81,9 @@
         android:id="@+id/AddBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:text="Add Book"
+        android:background="#4CAF50"
+
         android:padding="16dp" />
 
 </LinearLayout>

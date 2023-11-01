@@ -9,11 +9,22 @@ android:gravity="center"
     android:background="@drawable/background"
 tools:context=".register_page">
 
-<androidx.cardview.widget.CardView
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView3"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="40dp"
+        android:elevation="6dp"
+        app:civ_border_color="#fff"
+        app:civ_border_width="3dp"
+        android:src="@drawable/profile" />
+
+    <androidx.cardview.widget.CardView
     android:layout_width="357dp"
     android:layout_height="wrap_content"
     android:layout_marginStart="30dp"
-    android:layout_marginTop="120dp"
+    android:layout_marginTop="60dp"
     android:layout_marginEnd="30dp"
     android:background="@drawable/custom_edittext"
     app:cardCornerRadius="30dp"
