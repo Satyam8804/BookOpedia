@@ -32,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:paddingStart="10sp"
+        android:paddingLeft="10sp"
+        android:textColor="@color/white"
         android:text="Mahabharat"
         tools:ignore="HardcodedText" />
 
@@ -42,7 +43,10 @@
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/baseline_star_24"
         android:text=""
+        android:textColor="@color/white"
         android:paddingStart="10sp"
-        tools:ignore="HardcodedText,UseCompatTextViewDrawableXml" />
+        tools:ignore="HardcodedText,UseCompatTextViewDrawableXml"
+        android:drawableLeft="@drawable/baseline_star_24"
+        android:paddingLeft="10sp" />
 
 </LinearLayout>

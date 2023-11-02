@@ -11,7 +11,7 @@
         android:id="@+id/upper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
         <TextView
@@ -47,6 +47,7 @@
             app:cardCornerRadius="20dp"
             android:layout_marginTop="30dp"
             android:layout_below="@+id/upper"
+            android:backgroundTint="#2b2d30"
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView

@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         databaseReference = FirebaseDatabase.getInstance().reference.child("books")
         userName = findViewById(R.id.userName)
-        userName.text = intent.getStringExtra("userName")
+
 
         rv = findViewById(R.id.rv)
 
