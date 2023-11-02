@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
@@ -54,32 +57,34 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            android:textColor="@color/grey"
             android:background="@drawable/border_right"
-            android:text="4.5" />
+            android:text="4.5"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/ebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/grey"
             android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:background="@drawable/border_right"
-            android:text="Ebook" />
+            android:text="Ebook"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/grey"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textStyle="bold"
-
-            android:textSize="24sp"
-            android:text="Comics" />
+            android:textSize="20sp"
+            android:text="Comics"
+            android:gravity="center_horizontal" />
 
     </LinearLayout>
 
@@ -111,4 +116,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/book_description" />
+
 </LinearLayout>
+</ScrollView>

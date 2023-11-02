@@ -1,37 +1,48 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F0F0F0">
 
     <!-- Add a new book heading -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add a New Book"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
         android:textColor="#333333"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp" />
 
-    <!-- Title -->
+    <!-- Genre -->
     <EditText
         android:id="@+id/Genre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Genre:"
+        android:hint="Genre"
+
+        android:padding="16dp"
         android:textSize="18sp"
         android:textColor="#000000"
-/>
+        android:background="#FFFFFF"
+        android:layout_marginTop="16dp" />
 
+    <!-- Title -->
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Book Title"
-        android:padding="16dp" />
+        android:layout_marginTop="10dp"
+
+        android:padding="16dp"
+        android:background="#FFFFFF" />
 
     <!-- Author -->
     <EditText
@@ -39,42 +50,87 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Author"
-        android:padding="16dp" />
+        android:layout_marginTop="10dp"
+
+        android:padding="16dp"
+        android:background="#FFFFFF" />
 
     <!-- Description -->
     <EditText
         android:id="@+id/Description"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:hint="Description"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:background="#FFFFFF" />
 
-    <!-- Image Upload -->
+    <!-- Year -->
     <EditText
         android:id="@+id/publishYear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Year"
+        android:padding="16dp"
+        android:background="#FFFFFF"
         android:ems="10"
-        android:inputType="date"
-        android:hint="Year" />
+        android:layout_marginTop="10dp"
+        android:inputType="date" />
+    <!-- Image Upload -->
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:orientation="horizontal">
+       <ImageView
+           android:id="@+id/imageView"
+           android:layout_width="80dp"
+           android:visibility="gone"
+           android:layout_height="55dp"
+        android:layout_gravity="center"
+           tools:srcCompat="@drawable/baseline_add_a_photo_24" />
 
-    <Button
-        android:id="@+id/UploadImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload Image"
-        android:background="#CADC1A"
+       <ProgressBar
+           android:id="@+id/imageUploadProgressBar"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:visibility="gone" />
 
-        android:padding="16dp" />
+       <Button
+           android:id="@+id/UploadImage"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:gravity="center"
+           android:padding="16dp"
+           android:text="Upload Cover"
+           android:textColor="#FFFFFF" />
 
+   </LinearLayout>
     <!-- PDF Upload -->
-    <Button
-        android:id="@+id/UploadPDF"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload PDF"
-        android:background="#2196F3"
-        android:padding="16dp" />
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <ProgressBar
+            android:id="@+id/pdfUploadProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/UploadPDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Upload PDF" />
+
+        <!-- PDF Upload ProgressBar -->
+
+
+    </LinearLayout>
 
     <!-- Add Button -->
     <Button
@@ -82,10 +138,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Book"
-        android:background="#4CAF50"
+        android:layout_marginTop="10dp"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        />
 
-        android:padding="16dp" />
+
 
 </LinearLayout>
-
-

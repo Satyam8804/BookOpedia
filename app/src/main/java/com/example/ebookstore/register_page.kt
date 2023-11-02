@@ -146,9 +146,9 @@ class register_page : AppCompatActivity() {
     fun realtimeDatabase(nam:String,em:String,pass:String) {
         val users = User(nam, em, pass)
         reference = FirebaseDatabase.getInstance().getReference("Users")
-        var userkey = reference.child(nam).push().getKey()
+        var userkey = reference.push().getKey()
         if(userkey!=null) {
-            reference.child(nam).child(userkey).setValue(users).addOnCompleteListener {
+            reference.child(userkey).setValue(users).addOnCompleteListener {
                 if (it.isSuccessful) {
                     Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
                 }

@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:gravity="end"
                 android:textColor="@color/purple_200"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_marginRight="10dp"
                 />
 
