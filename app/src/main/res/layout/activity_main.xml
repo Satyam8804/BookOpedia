@@ -33,6 +33,37 @@
             android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:text="Discover Latest Books" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Search for books"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:drawablePadding="8dp"
+                android:inputType="text"
+                android:imeOptions="actionSearch"
+
+                android:importantForAccessibility="yes"
+                android:background="@drawable/serchbox_bg"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:theme="@style/EditTextTheme"
+            />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +76,7 @@
             android:layout_width="match_parent"
             android:elevation="20dp"
             app:cardCornerRadius="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/upper"
             android:backgroundTint="#2b2d30"
             android:layout_height="match_parent">

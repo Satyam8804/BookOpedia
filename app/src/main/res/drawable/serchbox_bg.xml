@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/search_box_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#EDEDED" />  <!-- Background color -->
+    <corners android:radius="20dp" />  <!-- Rounded corners radius -->
+</shape>

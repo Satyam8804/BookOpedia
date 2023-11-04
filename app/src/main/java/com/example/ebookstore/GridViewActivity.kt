@@ -1,5 +1,6 @@
 package com.example.ebookstore
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ class GridViewActivity : AppCompatActivity() {
     lateinit var gridView : GridView
     lateinit var list: ArrayList<bookModel>
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_grid_view)

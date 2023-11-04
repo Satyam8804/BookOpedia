@@ -58,4 +58,6 @@ dependencies {
     implementation ("androidx.multidex:multidex:2.0.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+
 }

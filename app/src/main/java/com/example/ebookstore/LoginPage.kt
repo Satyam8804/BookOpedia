@@ -53,6 +53,7 @@ class LoginPage : AppCompatActivity() {
 
             if (UserEmail.isNotEmpty() && pass.isNotEmpty() ) {
                 firebaseAuth.signInWithEmailAndPassword(UserEmail, pass).addOnCompleteListener {
+
                     if (it.isSuccessful) {
                         val i: Intent = Intent(applicationContext, MainActivity::class.java)
                         startActivity(i);

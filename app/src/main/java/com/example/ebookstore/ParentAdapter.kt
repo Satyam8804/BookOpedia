@@ -11,12 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-class ParentAdapter(private val parentList: List<ParentModel>):RecyclerView.Adapter<ParentAdapter.ParentViewHolder>() {
+class ParentAdapter(private var parentList: List<ParentModel>):RecyclerView.Adapter<ParentAdapter.ParentViewHolder>() {
     private lateinit var childAdapter: bookAdapter
     inner class ParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
         val viewMore:TextView = itemView.findViewById(R.id.viewMore)
         val childRecyclerView: RecyclerView = itemView.findViewById(R.id.child_rv)
+    }
+
+    fun updateData(newParentList: List<ParentModel>) {
+        parentList = newParentList
+        notifyDataSetChanged()
     }
 
 
@@ -44,6 +49,8 @@ class ParentAdapter(private val parentList: List<ParentModel>):RecyclerView.Adap
 
             context.startActivity(intent)
         }
+
+
 
 
         holder.childRecyclerView.setHasFixedSize(true)

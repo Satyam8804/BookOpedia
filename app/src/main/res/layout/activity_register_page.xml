@@ -20,6 +20,7 @@ tools:context=".register_page">
     android:background="@drawable/custom_edittext"
     app:cardCornerRadius="30dp"
     android:alpha="7"
+        android:backgroundTint="#2b2d30"
     app:cardElevation="20dp">
 
     <LinearLayout
@@ -40,7 +41,8 @@ tools:context=".register_page">
             android:textColor="@color/purple"
             android:textSize="36sp"
             android:layout_marginBottom="50dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView3"
@@ -50,7 +52,7 @@ tools:context=".register_page">
             app:civ_border_color="#796bb7"
             android:elevation="3dp"
             app:civ_border_width="3dp"
-            android:src="@drawable/profile" />
+            android:src="@drawable/baseline_add_a_photo_24" />
 
 
 
@@ -65,7 +67,9 @@ tools:context=".register_page">
             android:hint="Name"
             android:inputType="textEmailAddress"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+
             android:textColorHighlight="@color/cardview_dark_background" />
 
         <EditText
@@ -79,7 +83,8 @@ tools:context=".register_page">
             android:hint="Email id"
             android:inputType="textEmailAddress"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textColorHighlight="@color/cardview_dark_background" />
 
 
@@ -94,7 +99,8 @@ tools:context=".register_page">
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textColorHighlight="@color/cardview_dark_background" />
         <EditText
             android:id="@+id/confirmpassword"
@@ -107,17 +113,19 @@ tools:context=".register_page">
             android:hint="Confirm Password"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textColorHighlight="@color/cardview_dark_background" />
         <Button
             android:id="@+id/registerButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
-            android:backgroundTint="@color/purple"
             android:text="Register"
+            android:background="@color/purple_200"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            app:cornerRadius="20dp" />
+            />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
 
@@ -131,5 +139,6 @@ tools:context=".register_page">
     android:text="Already registered? Login "
     android:textAlignment="center"
     android:textColor="@color/white"
-    android:textSize="14sp" />
+    android:textSize="14sp"
+    android:gravity="center_horizontal" />
 </LinearLayout>

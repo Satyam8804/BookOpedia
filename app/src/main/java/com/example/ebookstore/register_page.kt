@@ -2,21 +2,15 @@ package com.example.ebookstore
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.example.ebookstore.R
 import com.example.ebookstore.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -26,6 +20,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import de.hdodenhof.circleimageview.CircleImageView
 
 
@@ -43,6 +38,7 @@ class register_page : AppCompatActivity() {
     private lateinit var storage:FirebaseStorage
     private lateinit var storageReference: StorageReference
     lateinit var circleImage: CircleImageView
+    var linkImg=""
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +88,7 @@ class register_page : AppCompatActivity() {
             var nam = name.text.toString()
             var cpass = confirmPassword.text.toString()
 
-            if(em.isNotEmpty() && pass.isNotEmpty() && nam.isNotEmpty()  && cpass.isNotEmpty()) {
+            if(em.isNotEmpty() && pass.isNotEmpty() && nam.isNotEmpty()  && cpass.isNotEmpty() && linkImg.isNotEmpty()) {
 
                 firebaseAuth.createUserWithEmailAndPassword(em, pass).addOnCompleteListener {
 
@@ -101,7 +97,7 @@ class register_page : AppCompatActivity() {
                     if (it.isSuccessful) {
                         Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show()
 
-                          realtimeDatabase(nam,em,pass)
+                        realtimeDatabase(nam,em,pass)
 
                         var i: Intent = Intent(this, LoginPage::class.java)
                         startActivity(i)
@@ -144,14 +140,13 @@ class register_page : AppCompatActivity() {
 
     }
     fun realtimeDatabase(nam:String,em:String,pass:String) {
-        val users = User(nam, em, pass)
+        val users = User(nam, em, pass,linkImg )
         reference = FirebaseDatabase.getInstance().getReference("Users")
-        var userkey = reference.push().getKey()
-        if(userkey!=null) {
-            reference.child(userkey).setValue(users).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
-                }
+        reference.child(em).setValue(users).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
+
+
 
             }
         }
@@ -179,6 +174,37 @@ class register_page : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==1 && data!=null && resultCode== RESULT_OK && data.getData()!=null){
             Glide.with(this).load(data.data).into(circleImage)
+            onImageAdd(data.data)
+
+        }
+    }
+
+    fun onImageAdd(imageUri: Uri?) {
+
+
+        if (imageUri != null) {
+            // Set the desired filename for the uploaded image
+            storageReference =
+                FirebaseStorage.getInstance().reference.child("Images/"+System.currentTimeMillis()+".jpg")
+
+            storageReference.putFile(imageUri)
+                .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot? ->
+                    // Image upload successful
+                    // Get the download URL of the uploaded image
+
+                    storageReference.downloadUrl
+                        .addOnSuccessListener { downloadUrl: Uri ->
+                            linkImg = downloadUrl.toString()
+
+                        }
+                        .addOnFailureListener { e: Exception? ->
+                            // Handle any errors if the download URL retrieval fails
+
+                        }
+                }
+                .addOnFailureListener { e: Exception? ->
+                    // Handle any errors if the image upload fails
+                }
         }
     }
 

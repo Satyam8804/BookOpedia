@@ -5,15 +5,25 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.core.content.ContextCompat
 import androidx.multidex.MultiDex
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,6 +42,8 @@ class MainActivity : AppCompatActivity() {
 
     private val mainList = ArrayList<ParentModel>()
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var databaseReference2:DatabaseReference
+
     private lateinit var rv : RecyclerView
 
     lateinit var userName : TextView
@@ -39,6 +51,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var upload: FloatingActionButton
     lateinit var logOut: FloatingActionButton
     var fabvisibility = false
+    private lateinit var etSearch: EditText
+    private var searchText: String = ""
+    var email :String=""
+    var imgLink:String=""
+
 
     @SuppressLint("NotifyDataSetChanged", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,10 +64,43 @@ class MainActivity : AppCompatActivity() {
         MultiDex.install(this)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
         window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
-        title ="Book Store"
+
+        val actionBar = supportActionBar
+        actionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
+        actionBar?.setCustomView(R.layout.actionbar_custom_layout)
+        val actionBarTitle = actionBar?.customView?.findViewById<TextView>(R.id.actionBarTitle)
+        actionBarTitle?.text ="BookOpedia"
+
 
         databaseReference = FirebaseDatabase.getInstance().reference.child("books")
         userName = findViewById(R.id.userName)
+        var i = Intent()
+        email = i.getStringExtra("email").toString()
+
+        databaseReference2 = FirebaseDatabase.getInstance().reference.child("Users")
+        databaseReference2.child(email).get().addOnSuccessListener{
+            if(it.exists())
+            {
+                userName.text = it.child("name").value.toString()
+                imgLink = it.child("Img").value.toString()
+
+
+            }
+        }
+        val circularImageView = actionBar?.customView?.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.circularImageView)
+        if (circularImageView != null) {
+            Glide.with(this)
+                .load(imgLink)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(circularImageView)
+        }
+
+        circularImageView?.setOnClickListener {
+            val profileImageUrl = imgLink
+            val dialog = ProfilePictureDialog(this, profileImageUrl)
+            dialog.show()
+        }
+
 
 
         rv = findViewById(R.id.rv)
@@ -66,6 +116,25 @@ class MainActivity : AppCompatActivity() {
         add = findViewById(R.id.idFABAdd)
         upload = findViewById(R.id.idFABUpload)
         logOut = findViewById(R.id.idFABLogOut)
+
+        etSearch = findViewById(R.id.etSearch)
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Handle text changes as the user types
+                searchText = s.toString()
+                filterBookList(searchText)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
+
+        // ...
 
 
         add.setOnClickListener{
@@ -126,6 +195,23 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Firebase", "Data retrieval failed: $error")
             }
         })
+
+
+    }
+    private fun filterBookList(query: String) {
+        val filteredList = ArrayList<ParentModel>()
+
+        for (parentModel in mainList) {
+            val filteredBookList = parentModel.mList.filter { book ->
+                book.title!!.contains(query, ignoreCase = true)
+            }
+
+            if (filteredBookList.isNotEmpty()) {
+                filteredList.add(ParentModel(parentModel.title, filteredBookList))
+            }
+        }
+
+        parentAdapter.updateData(filteredList)
     }
 
     }

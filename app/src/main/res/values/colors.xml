@@ -10,5 +10,6 @@
     <color name="grey">#808080</color>
     <color name="purple">#8692f7</color>
     <color name="status">#8d98f3</color>
+    <color name="colorPrimary">#007ACC</color>
 
 </resources>
