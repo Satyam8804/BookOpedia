@@ -1,20 +1,17 @@
 package com.example.ebookstore
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.ebookstore.MainActivity
-import com.example.ebookstore.R
+import com.example.ebookstore.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,9 +22,9 @@ class LoginPage : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var password: EditText
-    private lateinit var register:TextView
+    private lateinit var register: TextView
     private lateinit var loginButton: Button
-    private lateinit var email:EditText
+    private lateinit var email: EditText
     private lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("NewApi")
@@ -38,8 +35,7 @@ class LoginPage : AppCompatActivity() {
 
         window?.statusBarColor = ContextCompat.getColor(this, R.color.status)
 
-
-       email = findViewById(R.id.emailId)
+        email = findViewById(R.id.emailId)
         password = findViewById(R.id.password)
 
         loginButton = findViewById(R.id.loginButton)
@@ -47,36 +43,81 @@ class LoginPage : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         loginButton.setOnClickListener {
-            val UserEmail= email.text.toString()
+            val userEmail = email.text.toString()
             val pass = password.text.toString()
 
-
-            if (UserEmail.isNotEmpty() && pass.isNotEmpty() ) {
-                firebaseAuth.signInWithEmailAndPassword(UserEmail, pass).addOnCompleteListener {
-
-                    if (it.isSuccessful) {
-                        val i: Intent = Intent(applicationContext, MainActivity::class.java)
-                        startActivity(i);
-                    } else {
-                        Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+            if (userEmail.isNotEmpty() && pass.isNotEmpty()) {
+                firebaseAuth.signInWithEmailAndPassword(userEmail, pass)
+                    .addOnCompleteListener { loginTask ->
+                        try {
+                            if (loginTask.isSuccessful) {
+                                // Successfully logged in, fetch user data from the database
+                                fetchUserDataFromDatabase(userEmail, pass)
+                            } else {
+                                throw loginTask.exception ?: Exception("Unknown error")
+                            }
+                        } catch (e: Exception) {
+                            handleLoginError(e)
+                        }
                     }
-                }
             }
-
-            val editor = sharedPreferences.edit()
-            editor.putString("username", UserEmail)
-            editor.putString("password", pass)
-            editor.apply()
         }
+
         register.setOnClickListener {
             val intent: Intent = Intent(this, register_page::class.java)
             startActivity(intent)
         }
+
         sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE)
         email.setText(sharedPreferences.getString("username", ""))
         password.setText(sharedPreferences.getString("password", ""))
     }
-    override fun onBackPressed() {
-        finishAffinity()
+
+    private fun fetchUserDataFromDatabase(userEmail: String, pass: String) {
+        val sanitizedEm = userEmail.replace(".", "_").replace("#", "_").replace("$", "_").replace("[", "_").replace("]", "_")
+        val reference = FirebaseDatabase.getInstance().getReference("Users").child(sanitizedEm)
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val user = dataSnapshot.getValue(User::class.java)
+                    if (user != null) {
+                        val userName = user.name
+                        val userImage = user.image
+                        Log.d("User Data", "User Name: $userName, User Image: $userImage")
+
+                        // ... rest of your code ...
+                        // Store user data in SharedPreferences
+                        val editor = sharedPreferences.edit()
+                        editor.putString("username", userEmail)
+                        editor.putString("password", pass)
+                        editor.putString("userName", userName)
+                        editor.putString("userImage", userImage)
+                        editor.apply()
+
+                        // Start the MainActivity and pass the user data
+                        val intent = Intent(applicationContext, MainActivity::class.java)
+                        intent.putExtra("userName", userName)
+                        intent.putExtra("userImage", userImage)
+                        startActivity(intent)
+                    } else {
+                        Log.e("User Data", "Failed to deserialize user data")
+                    }
+                } else {
+                    Log.e("User Data", "DataSnapshot does not exist")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e("Database Error", "Error: ${databaseError.message}")
+                handleLoginError(Exception("Database Error: ${databaseError.message}"))
+            }
+        })
+
+    }
+    private fun handleLoginError(exception: Exception) {
+        runOnUiThread {
+            Toast.makeText(this, "Login Error: ${exception.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

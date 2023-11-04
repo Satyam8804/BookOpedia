@@ -22,7 +22,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="monospace"
-            android:text="Hey, Satyam !" />
+            android:text="Hey, " />
 
         <TextView
             android:id="@+id/subTitle"

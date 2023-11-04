@@ -2,6 +2,7 @@ package com.example.ebookstore
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.ebookstore.model.User
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -38,21 +40,22 @@ class register_page : AppCompatActivity() {
     private lateinit var storage:FirebaseStorage
     private lateinit var storageReference: StorageReference
     lateinit var circleImage: CircleImageView
-    var linkImg=""
+    lateinit var linkImg: String
+
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_register_page)
 
-//        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
         window?.statusBarColor = ContextCompat.getColor(this, R.color.status)
 
         registerButton = findViewById(R.id.registerButton)
         firebaseAuth = FirebaseAuth.getInstance()
         db = FirebaseDatabase.getInstance()
         circleImage = findViewById(R.id.imageView3)
-
+        linkImg=""
         circleImage.setOnClickListener{
             intent = Intent()
             intent.setType("image/*")
@@ -68,20 +71,8 @@ class register_page : AppCompatActivity() {
         confirmPassword=findViewById(R.id.confirmpassword)
         name = findViewById(R.id.Name)
 
-//        val galleryImage = registerForActivityResult(
-//            ActivityResultContracts.GetContent() , {
-//                image.setImageURI(it)
-//                if (it != null) {
-//                    uri = it
-//                }
-//            }
-//
-//        )
-//        upload.setOnClickListener{
-//            galleryImage.launch("image/*")
-//        }
 
-        registerButton?.setOnClickListener{
+        registerButton.setOnClickListener{
 
             val em = email.text.toString()
             val pass = password.text.toString()
@@ -91,8 +82,6 @@ class register_page : AppCompatActivity() {
             if(em.isNotEmpty() && pass.isNotEmpty() && nam.isNotEmpty()  && cpass.isNotEmpty() && linkImg.isNotEmpty()) {
 
                 firebaseAuth.createUserWithEmailAndPassword(em, pass).addOnCompleteListener {
-
-
 
                     if (it.isSuccessful) {
                         Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show()
@@ -112,7 +101,6 @@ class register_page : AppCompatActivity() {
                         } catch (e: FirebaseAuthUserCollisionException) {
                             Toast.makeText(this, "Some error! Please try again"+e.toString(), Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
-
 
                             Toast.makeText(
                                 this,
@@ -135,53 +123,39 @@ class register_page : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-
-
     }
-    fun realtimeDatabase(nam:String,em:String,pass:String) {
-        val users = User(nam, em, pass,linkImg )
-        reference = FirebaseDatabase.getInstance().getReference("Users")
-        reference.child(em).setValue(users).addOnCompleteListener {
-            if (it.isSuccessful) {
-                Toast.makeText(this, "Your data saved ", Toast.LENGTH_SHORT).show()
-
-
-
+    fun realtimeDatabase(nam: String, em: String, pass: String) {
+        Toast.makeText(this, linkImg, Toast.LENGTH_LONG).show()
+        val users = User(nam, em, pass, linkImg)
+        val sanitizedEm = em.replace(".", "_").replace("#", "_").replace("$", "_").replace("[", "_").replace("]", "_")
+        val reference = FirebaseDatabase.getInstance().getReference("Users").child(sanitizedEm)
+        reference.setValue(users).addOnCompleteListener { task ->
+            try {
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Your data saved", Toast.LENGTH_SHORT).show()
+                } else {
+                    throw task.exception ?: Exception("Unknown error")
+                }
+            } catch (e: Exception) {
+                if (e is FirebaseException) {
+                    // Handle Firebase-related exceptions
+                    Toast.makeText(this, "Firebase Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Handle other exceptions
+                    Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
-//    fun setImage(uname: String){
-//        storageReference = FirebaseStorage.getInstance().getReference("Images")
-//        storageReference.child(System.currentTimeMillis().toString()).putFile(uri).addOnSuccessListener {
-//                task -> task.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
-//            val uid = FirebaseAuth.getInstance().currentUser!!.uid
-//
-//
-//            val userImages = UserImage(uri.toString())
-//            if (uid != null) {
-//                databaseReference = FirebaseDatabase.getInstance().getReference("Images")
-//                databaseReference.child(uid).setValue(userImages).addOnSuccessListener {
-//                    Toast.makeText(this,"Your images is also saved",Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//        }
-//        }
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==1 && data!=null && resultCode== RESULT_OK && data.getData()!=null){
             Glide.with(this).load(data.data).into(circleImage)
             onImageAdd(data.data)
-
         }
     }
 
     fun onImageAdd(imageUri: Uri?) {
-
-
         if (imageUri != null) {
             // Set the desired filename for the uploaded image
             storageReference =
@@ -189,17 +163,11 @@ class register_page : AppCompatActivity() {
 
             storageReference.putFile(imageUri)
                 .addOnSuccessListener { taskSnapshot: UploadTask.TaskSnapshot? ->
-                    // Image upload successful
-                    // Get the download URL of the uploaded image
-
                     storageReference.downloadUrl
                         .addOnSuccessListener { downloadUrl: Uri ->
                             linkImg = downloadUrl.toString()
-
                         }
                         .addOnFailureListener { e: Exception? ->
-                            // Handle any errors if the download URL retrieval fails
-
                         }
                 }
                 .addOnFailureListener { e: Exception? ->

@@ -33,6 +33,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 import java.io.InputStream
 import java.nio.charset.Charset
 import javax.microedition.khronos.opengles.GL10
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     var fabvisibility = false
     private lateinit var etSearch: EditText
     private var searchText: String = ""
-    var email :String=""
     var imgLink:String=""
 
 
@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         MultiDex.install(this)
+
         supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.purple_200)))
         window?.statusBarColor = ContextCompat.getColor(this, R.color.purple_200)
 
@@ -69,30 +70,26 @@ class MainActivity : AppCompatActivity() {
         actionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         actionBar?.setCustomView(R.layout.actionbar_custom_layout)
         val actionBarTitle = actionBar?.customView?.findViewById<TextView>(R.id.actionBarTitle)
+
         actionBarTitle?.text ="BookOpedia"
 
 
         databaseReference = FirebaseDatabase.getInstance().reference.child("books")
         userName = findViewById(R.id.userName)
-        var i = Intent()
-        email = i.getStringExtra("email").toString()
-
-        databaseReference2 = FirebaseDatabase.getInstance().reference.child("Users")
-        databaseReference2.child(email).get().addOnSuccessListener{
-            if(it.exists())
-            {
-                userName.text = it.child("name").value.toString()
-                imgLink = it.child("Img").value.toString()
 
 
-            }
-        }
+        userName.text = "Hey," + intent.getStringExtra("userName")+ "!"
+        imgLink =  intent.getStringExtra("userImage").toString()
+
         val circularImageView = actionBar?.customView?.findViewById<de.hdodenhof.circleimageview.CircleImageView>(R.id.circularImageView)
+
         if (circularImageView != null) {
-            Glide.with(this)
+            Picasso.get()
                 .load(imgLink)
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.profile) // Placeholder image while loading
+                .error(R.drawable.profile) // Default image in case of error
                 .into(circularImageView)
+
         }
 
         circularImageView?.setOnClickListener {
